@@ -1,1 +1,1 @@
-Une application simple, générée pas Google AI Studio pour créer des CV  simplement.
+Une application simple, générée pas Google AI Studio pour créer des CV .
