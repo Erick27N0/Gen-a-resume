@@ -1,0 +1,6 @@
+{
+  "name": "Générateur de CV",
+  "description": "Un outil simple, moderne et interactif pour créer et personnaliser votre CV professionnel, avec aperçu en temps réel et export PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

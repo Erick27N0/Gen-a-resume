@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-nouvance-blue: #132B63;     /* Bleu Nuit */
+  --color-nouvance-purple: #7B3FF2;   /* Violet Nouvance */
+  --color-nouvance-accent: #A96DFF;   /* Violet Clair */
+  --color-nouvance-light: #F8FAFC;    /* Gris clair */
+  --color-nouvance-dark: #0F172A;     /* Ardoise sombre */
+}
+
+/* Base custom styles to respect Nouvance identity: rounded-lg (8px) fixed, Inter, clear spacing */
+body {
+  background-color: var(--color-nouvance-light);
+  color: var(--color-nouvance-dark);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fix rounded corners to 8px across the board */
+.rounded-8 {
+  border-radius: 8px !important;
+}
+
+/* Custom Scrollbar for clean UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Print Styles */
+@media print {
+  /* Hide everything except the CV page preview */
+  body * {
+    visibility: hidden;
+  }
+  
+  #cv-preview-print-target, #cv-preview-print-target * {
+    visibility: visible;
+  }
+  
+  #cv-preview-print-target {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+  }
+
+  /* Force background colors to print correctly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+  
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+}
