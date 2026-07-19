@@ -53,3 +53,6 @@ export interface CVTheme {
 }
 
 export type CVFont = 'sans' | 'serif';
+
+export type CVLayout = 'classic' | 'sidebar-left' | 'sidebar-right';
+

@@ -11,7 +11,7 @@ import {
   CheckCircle,
   HelpCircle
 } from "lucide-react";
-import { CVData, CVTheme, CVFont } from "./types";
+import { CVData, CVTheme, CVFont, CVLayout } from "./types";
 import { demoCVData, defaultEmptyCVData } from "./data";
 import CVForm from "./components/CVForm";
 import CVPreview from "./components/CVPreview";
@@ -68,6 +68,7 @@ export default function App() {
 
   const [activeThemeId, setActiveThemeId] = useState<string>("navy");
   const [activeFont, setActiveFont] = useState<CVFont>("sans");
+  const [activeLayout, setActiveLayout] = useState<CVLayout>("sidebar-right");
   const [notification, setNotification] = useState<string | null>(null);
 
   // Find active theme
@@ -171,52 +172,91 @@ export default function App() {
               Personnalisation
             </h3>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Theme Color Picker */}
-              <div className="space-y-1.5">
-                <span className="block text-[11px] font-semibold text-slate-500">Palette de couleurs</span>
-                <div className="flex items-center gap-2">
-                  {CV_THEMES.map((theme) => (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Theme Color Picker */}
+                <div className="space-y-1.5">
+                  <span className="block text-[11px] font-semibold text-slate-500">Palette de couleurs</span>
+                  <div className="flex items-center gap-2">
+                    {CV_THEMES.map((theme) => (
+                      <button
+                        key={theme.id}
+                        onClick={() => setActiveThemeId(theme.id)}
+                        className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all cursor-pointer ${
+                          activeThemeId === theme.id ? "border-[#132B63]" : "border-transparent hover:scale-105"
+                        }`}
+                        title={theme.name}
+                      >
+                        <span 
+                          className="w-5 h-5 rounded-full block shadow-xs" 
+                          style={{ backgroundColor: theme.primaryColor }} 
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Font Selector */}
+                <div className="space-y-1.5">
+                  <span className="block text-[11px] font-semibold text-slate-500">Style typographique</span>
+                  <div className="flex bg-slate-100 p-0.5 rounded-[8px] w-fit">
                     <button
-                      key={theme.id}
-                      onClick={() => setActiveThemeId(theme.id)}
-                      className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all cursor-pointer ${
-                        activeThemeId === theme.id ? "border-[#132B63]" : "border-transparent hover:scale-105"
+                      onClick={() => setActiveFont("sans")}
+                      className={`px-3 py-1 text-[11px] font-medium rounded-[6px] cursor-pointer transition-colors ${
+                        activeFont === "sans" 
+                          ? "bg-white text-slate-800 shadow-xs" 
+                          : "text-slate-500 hover:text-slate-800"
                       }`}
-                      title={theme.name}
                     >
-                      <span 
-                        className="w-5 h-5 rounded-full block shadow-xs" 
-                        style={{ backgroundColor: theme.primaryColor }} 
-                      />
+                      Sans-Serif (Inter)
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setActiveFont("serif")}
+                      className={`px-3 py-1 text-[11px] font-medium rounded-[6px] cursor-pointer transition-colors ${
+                        activeFont === "serif" 
+                          ? "bg-white text-slate-800 shadow-xs" 
+                          : "text-slate-500 hover:text-slate-800"
+                      }`}
+                    >
+                      Serif (Playfair)
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Font Selector */}
-              <div className="space-y-1.5">
-                <span className="block text-[11px] font-semibold text-slate-500">Style typographique</span>
-                <div className="flex bg-slate-100 p-0.5 rounded-[8px] w-fit">
+              {/* Layout Selector */}
+              <div className="space-y-1.5 border-t border-slate-100 pt-3">
+                <span className="block text-[11px] font-semibold text-slate-500 mb-1.5">Structure &amp; Disposition (Layout)</span>
+                <div className="grid grid-cols-3 gap-2">
                   <button
-                    onClick={() => setActiveFont("sans")}
-                    className={`px-3 py-1 text-[11px] font-medium rounded-[6px] cursor-pointer transition-colors ${
-                      activeFont === "sans" 
-                        ? "bg-white text-slate-800 shadow-xs" 
-                        : "text-slate-500 hover:text-slate-800"
+                    onClick={() => setActiveLayout("classic")}
+                    className={`py-2 px-2.5 text-[11px] font-medium rounded-[8px] border text-center transition-all cursor-pointer ${
+                      activeLayout === "classic"
+                        ? "bg-nouvance-blue text-white border-nouvance-blue font-bold shadow-xs"
+                        : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    Sans-Serif (Inter)
+                    Classique (1 Col)
                   </button>
                   <button
-                    onClick={() => setActiveFont("serif")}
-                    className={`px-3 py-1 text-[11px] font-medium rounded-[6px] cursor-pointer transition-colors ${
-                      activeFont === "serif" 
-                        ? "bg-white text-slate-800 shadow-xs" 
-                        : "text-slate-500 hover:text-slate-800"
+                    onClick={() => setActiveLayout("sidebar-left")}
+                    className={`py-2 px-2.5 text-[11px] font-medium rounded-[8px] border text-center transition-all cursor-pointer ${
+                      activeLayout === "sidebar-left"
+                        ? "bg-nouvance-blue text-white border-nouvance-blue font-bold shadow-xs"
+                        : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    Serif (Playfair)
+                    Sidebar Gauche
+                  </button>
+                  <button
+                    onClick={() => setActiveLayout("sidebar-right")}
+                    className={`py-2 px-2.5 text-[11px] font-medium rounded-[8px] border text-center transition-all cursor-pointer ${
+                      activeLayout === "sidebar-right"
+                        ? "bg-nouvance-blue text-white border-nouvance-blue font-bold shadow-xs"
+                        : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                    }`}
+                  >
+                    Sidebar Droite
                   </button>
                 </div>
               </div>
@@ -240,7 +280,7 @@ export default function App() {
 
           {/* Printable Page Container */}
           <div className="w-full relative bg-slate-200/50 rounded-[8px] p-2 sm:p-4 md:p-6 border border-slate-200/80 shadow-inner max-w-full overflow-x-auto min-h-[400px]">
-            <CVPreview data={cvData} theme={currentTheme} font={activeFont} />
+            <CVPreview data={cvData} theme={currentTheme} font={activeFont} layout={activeLayout} />
           </div>
         </div>
       </main>
